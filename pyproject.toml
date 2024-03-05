@@ -16,18 +16,15 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "3.10.12"
-pandas = "*"
+pandas = "^2.1.1"
 seaborn = "^0.13.0"
 numpy = "1.24.3"
 scikit-learn = "1.2.2"
 kaggle = "*"
-ipython = "*"
 joblib = "^1.3.2"
 psutil = "^5.9.5"
-notebook = "6.4.12"
 wandb = "^0.15.12"
 pyarrow = "^13.0.0"
-nvitop = "^1.3.1"
 urllib3 = "1.26.11"
 ipywidgets = "^8.1.1"
 pickleshare = "^0.7.5"
@@ -35,20 +32,11 @@ torch = "^2.1.2"
 torchaudio = "^2.1.2"
 torchvision = "^0.16.2"
 pytorch-lightning = "^2.1.3"
-codeium-jupyter = "^1.1.21"
-jupyter-contrib-nbextensions = "^0.7.0"
 traittypes = "^0.2.1"
 traitlets = "5.9.0"
 transformers = "^4.37.2"
 datasets = "^2.17.1"
-evaluate = "^0.4.1"
-accelerate = "^0.27.2"
-tox = "^4.13.0"
 poetry-core = "^1.9.0"
-pytest = "^8.0.2"
-pre-commit = "^3.6.2"
-mypy = "^1.8.0"
-black = "^24.2.0"
 
 [build-system]
 requires = ["poetry_core>=1.9.0"]
@@ -56,3 +44,18 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.ruff.per-file-ignores]
 "__init__.py" = ["F401"]
+
+[tool.poetry.group.dev.dependencies]
+nvitop = "^1.3.1"
+ipython = "*"
+
+[tool.poetry.group.typing.dependencies]
+mypy = "^1.8.0"
+tox = "^4.13.0"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.0.2"
+
+[tool.poetry.group.lint.dependencies]
+pre-commit = "^3.6.2"
+black = "^24.2.0"
