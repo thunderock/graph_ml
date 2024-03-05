@@ -77,15 +77,6 @@ jobs:
         if: steps.cache.outputs.cache-hit == 'true' && matrix.os != 'MacOS'
         run: timeout 10s poetry run pip --version || rm -rf .venv
 
-      - name: Install runtime, testing, and typing dependencies
-        run: poetry install --only main --only test --only lint --only typing --no-root -vvv
-
-      - name: Install project
-        run: poetry run maturin develop
-
-      - name: Run type checking
-        run: poetry run mypy
-
       - name: Uninstall typing dependencies
         # This ensures pendulum runs without typing_extensions installed
         run: poetry install --only main --only test --no-root -vvv
