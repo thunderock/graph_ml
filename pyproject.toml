@@ -56,5 +56,3 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.ruff.per-file-ignores]
 "__init__.py" = ["F401"]
-
-
