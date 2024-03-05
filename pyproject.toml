@@ -54,4 +54,7 @@ black = "^24.2.0"
 requires = ["poetry_core>=1.9.0"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
+
 
