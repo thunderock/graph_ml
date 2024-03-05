@@ -18,7 +18,7 @@ else
 	# python3 -m keyring --disable
 endif
 	@poetry config virtualenvs.in-project true
-	@poetry install --only main --only test --only lint -vvv
+	@poetry install --only main --only lint -vvv
 
 .PHONY: format
 format:
