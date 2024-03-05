@@ -80,10 +80,6 @@ jobs:
       - name: Install project
         run: poetry build -f wheel
 
-      - name: Uninstall typing dependencies
-        # This ensures pendulum runs without typing_extensions installed
-        run: poetry install --only main --only test --no-root -vvv
-
       - name: Test Pure Python
         run: |
           PENDULUM_EXTENSIONS=0 poetry run pytest -q tests
