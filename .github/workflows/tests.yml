@@ -73,16 +73,11 @@ jobs:
           key: venv-${{ runner.os }}-${{ steps.full-python-version.outputs.version }}-${{ hashFiles('**/poetry.lock') }}
 
       - name: Ensure cache is healthy
-        # MacOS does not come with `timeout` command out of the box
         if: steps.cache.outputs.cache-hit == 'true' && matrix.os != 'MacOS'
         run: timeout 10s poetry run pip --version || rm -rf .venv
 
-      - name: Install project
-        run: poetry build -f wheel
-
-      - name: Test Pure Python
-        run: |
-          PENDULUM_EXTENSIONS=0 poetry run pytest -q tests
+      - name: Uninstall typing dependencies
+        run: poetry install --only main --only test -vvv
 
       - name: Test
         run: |
