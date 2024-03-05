@@ -15,10 +15,15 @@ ifeq ($(OS),Darwin)
 	@echo "Mac"
 else
 	@echo "Linux"
-	# python3 -m keyring --disable
 endif
 	@poetry config virtualenvs.in-project true
-	@poetry install --only main --only lint -vvv
+	@poetry install --only main -vvv
+
+.PHONY: setup_all
+setup_all: clean
+	@echo "setting up..."
+	@poetry config virtualenvs.in-project true
+	@poetry install -vvv
 
 .PHONY: format
 format:
