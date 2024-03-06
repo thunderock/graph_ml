@@ -9,3 +9,6 @@ Graph ML
 ML on Graphs made easy
 
 Supports Python **3.10.2**.
+
+
+Under the hood it uses `PyG <https://pytorch-geometric.readthedocs.io/en/latest/>`_. Its main goal is to provide a simple and intuitive using APIs similar to sklearn.
