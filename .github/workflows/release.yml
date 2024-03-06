@@ -50,7 +50,6 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install poetry
           poetry config virtualenvs.create false
-          poetry install --only main
 
       - name: build wheels
         run: |
@@ -78,7 +77,6 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install poetry
           poetry config virtualenvs.create false
-          poetry install --only main
 
       - name: Build sdist
         run: |
