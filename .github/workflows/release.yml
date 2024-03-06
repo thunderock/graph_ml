@@ -136,10 +136,13 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: "v${{ steps.set-tag.outputs.tag }}"
+          fail-if-no-assets: false
+          fail-if-no-release: false
           assets: |
             *.tar.gz
             *.whl
             *.zip
+
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
