@@ -150,3 +150,6 @@ jobs:
           skipIfReleaseExists: false
           replacesArtifacts: true
           prerelease: steps.check-version.outputs.prerelease == 'true'
+          makeLatest: true
+          owner: "Ashutosh Tiwari"
+          allowUpdates: true
