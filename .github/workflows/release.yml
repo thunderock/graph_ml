@@ -131,6 +131,15 @@ jobs:
       - name: Print TAG
         run: echo "v${{ steps.set-tag.outputs.tag }}"
 
+      - name: Delete older release assets
+        uses: mknejp/delete-release-assets@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: "v${{ steps.set-tag.outputs.tag }}"
+          assets: |
+            *.tar.gz
+            *.whl
+            *.zip
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
