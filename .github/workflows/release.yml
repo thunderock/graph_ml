@@ -24,12 +24,16 @@ jobs:
             target: aarch64
           - os: ubuntu
             platform: linux
-            target: armv7
+            target: ppc64le
             interpreter: 3.10.12
           - os: ubuntu
             platform: linux
             target: aarch64
             manylinux: musllinux_1_1
+          - os: ubuntu
+            platform: linux
+            target: s390x
+            interpreter: 3.10.12
 
     runs-on: ${{ matrix.os }}-latest
     steps:
@@ -120,10 +124,12 @@ jobs:
             || echo ::set-output name=prerelease::true
 
       - name: Set tag
-        # get tag from file name graph_ml-0.1.tar.gz
         id: set-tag
         run: |
           echo ::set-output name=tag::$(ls dist/*.tar.gz | sed -n 's/.*graph_ml-\(.*\).tar.gz/\1/p')
+
+      - name: Print TAG
+        run: echo "v${{ steps.set-tag.outputs.tag }}"
 
       - name: Create Release
         uses: ncipollo/release-action@v1
@@ -131,6 +137,7 @@ jobs:
           artifacts: "dist/*"
           token: ${{ secrets.GITHUB_TOKEN }}
           draft: false
-          tag: ${{ steps.set-tag.outputs.tag }}
+          tag: "v${{ steps.set-tag.outputs.tag }}"
           skipIfReleaseExists: false
           replacesArtifacts: true
+          prerelease: steps.check-version.outputs.prerelease == 'true'
