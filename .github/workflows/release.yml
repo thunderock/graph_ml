@@ -79,6 +79,9 @@ jobs:
         run: |
           poetry build -f sdist
 
+      - name: print github ref
+        run: echo ${{ github.ref }}
+
       - name: Upload sdist
         uses: actions/upload-artifact@v3
         with:
@@ -124,4 +127,3 @@ jobs:
           artifacts: "dist/*"
           token: ${{ secrets.GITHUB_TOKEN }}
           draft: false
-          prerelease: steps.check-version.outputs.prerelease == 'true'
