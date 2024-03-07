@@ -1,6 +1,8 @@
 from __future__ import annotations
 import os
 
+import pytest
+
 from graph_ml.utils import config
 
 OS = os.name
@@ -8,6 +10,10 @@ OS = os.name
 
 def test_target_os():
     assert OS == "posix"
+
+
+def test_target_platform():
+    assert config.PLATFORM in ["linux", "darwin"]
 
 
 def test_device_type():
@@ -23,3 +29,7 @@ def test_gpu_available():
         assert not config.GPU_AVAILABLE
     else:
         assert False
+
+
+def test_device_count():
+    assert config.DEVICE_COUNT >= 1
