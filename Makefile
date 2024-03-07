@@ -31,3 +31,9 @@ format:
 	@poetry install --only lint
 	@poetry run black .
 	@poetry run pre-commit run --all-files
+
+.PHONY: run_tests
+run_tests:
+	@echo "running tests..."
+	@poetry install --only main --only test -vvv
+	@poetry run pytest -q tests
