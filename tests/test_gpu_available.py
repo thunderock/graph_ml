@@ -1,5 +1,5 @@
 from __future__ import annotations
-import os
+import os, sys
 
 from graph_ml.utils import config
 
