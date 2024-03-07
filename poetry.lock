@@ -2162,6 +2162,25 @@ files = [
 ]
 
 [[package]]
+name = "pyg-lib"
+version = "0.4.0+pt21cu121"
+description = "Low-Level Graph Neural Network Operators for PyG"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "pyg_lib-0.4.0+pt21cu121-cp310-cp310-linux_x86_64.whl", hash = "sha256:1f487865f480a31acb043df4e4e43303163fc24ae1d92a8cb2aa278e65685686"},
+]
+
+[package.extras]
+dev = ["pre-commit"]
+test = ["pytest", "pytest-cov"]
+triton = ["triton"]
+
+[package.source]
+type = "url"
+url = "https://data.pyg.org/whl/torch-2.1.0%2Bcu121/pyg_lib-0.4.0%2Bpt21cu121-cp310-cp310-linux_x86_64.whl"
+
+[[package]]
 name = "pygments"
 version = "2.17.2"
 description = "Pygments is a syntax highlighting package written in Python."
@@ -2807,6 +2826,80 @@ dynamo = ["jinja2"]
 opt-einsum = ["opt-einsum (>=3.3)"]
 
 [[package]]
+name = "torch-cluster"
+version = "1.6.2+pt21cu121"
+description = "PyTorch Extension Library of Optimized Graph Cluster Algorithms"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "torch_cluster-1.6.2+pt21cu121-cp310-cp310-linux_x86_64.whl", hash = "sha256:ec7d1827b6357f0df1ce23e3d695628fe4ba799c374d61a45573441b7456c7fa"},
+]
+
+[package.dependencies]
+scipy = "*"
+
+[package.extras]
+test = ["pytest", "pytest-cov"]
+
+[package.source]
+type = "url"
+url = "https://data.pyg.org/whl/torch-2.1.0%2Bcu121/torch_cluster-1.6.2%2Bpt21cu121-cp310-cp310-linux_x86_64.whl"
+
+[[package]]
+name = "torch-scatter"
+version = "2.1.2+pt21cu121"
+description = "PyTorch Extension Library of Optimized Scatter Operations"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "torch_scatter-2.1.2+pt21cu121-cp310-cp310-linux_x86_64.whl", hash = "sha256:5f8d47fab8667b153ca5ca89b616c82f7610814bd25e1b1ee081e789bed3a76f"},
+]
+
+[package.extras]
+test = ["pytest", "pytest-cov"]
+
+[package.source]
+type = "url"
+url = "https://data.pyg.org/whl/torch-2.1.0%2Bcu121/torch_scatter-2.1.2%2Bpt21cu121-cp310-cp310-linux_x86_64.whl"
+
+[[package]]
+name = "torch-sparse"
+version = "0.6.18+pt21cu121"
+description = "PyTorch Extension Library of Optimized Autograd Sparse Matrix Operations"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "torch_sparse-0.6.18+pt21cu121-cp310-cp310-linux_x86_64.whl", hash = "sha256:1fa4542fc2a895b3530c872640ca25f6ae77a0072ecd8375e11989dcf9148d60"},
+]
+
+[package.dependencies]
+scipy = "*"
+
+[package.extras]
+test = ["pytest", "pytest-cov"]
+
+[package.source]
+type = "url"
+url = "https://data.pyg.org/whl/torch-2.1.0%2Bcu121/torch_sparse-0.6.18%2Bpt21cu121-cp310-cp310-linux_x86_64.whl"
+
+[[package]]
+name = "torch-spline-conv"
+version = "1.2.2+pt21cu121"
+description = "Implementation of the Spline-Based Convolution Operator of SplineCNN in PyTorch"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "torch_spline_conv-1.2.2+pt21cu121-cp310-cp310-linux_x86_64.whl", hash = "sha256:f9612c0dc4878c72c56fbf601b619f2d8459cd129ef4670c6381ae2016b77223"},
+]
+
+[package.extras]
+test = ["pytest", "pytest-cov"]
+
+[package.source]
+type = "url"
+url = "https://data.pyg.org/whl/torch-2.1.0%2Bcu121/torch_spline_conv-1.2.2%2Bpt21cu121-cp310-cp310-linux_x86_64.whl"
+
+[[package]]
 name = "torchaudio"
 version = "2.1.2"
 description = "An audio package for PyTorch"
@@ -3383,4 +3476,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "3.10.12"
-content-hash = "a8744373803827185a515aa503f9b703422ba35b43db766ee58f6a5f09bc7b51"
+content-hash = "b3a642cce2e42783b31b475b3fa097af42aa78ba5d544a018b3eed86f9cac31d"
