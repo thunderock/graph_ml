@@ -1,7 +1,6 @@
 from __future__ import annotations
 import os
 
-import pytest
 
 from graph_ml.utils import config
 
