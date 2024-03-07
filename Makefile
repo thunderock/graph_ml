@@ -30,7 +30,8 @@ format:
 	@echo "formatting..."
 	@poetry install --only lint
 	@poetry run black .
-	@poetry run pre-commit run --all-files
+	# ruff fix
+	@poetry run pre-commit run --all-files --config .pre-commit-config.yaml
 
 .PHONY: run_tests
 run_tests:
