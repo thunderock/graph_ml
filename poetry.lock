@@ -2846,6 +2846,37 @@ type = "url"
 url = "https://data.pyg.org/whl/torch-2.1.0%2Bcu121/torch_cluster-1.6.2%2Bpt21cu121-cp310-cp310-linux_x86_64.whl"
 
 [[package]]
+name = "torch-geometric"
+version = "2.5.0"
+description = "Graph Neural Network Library for PyTorch"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "torch_geometric-2.5.0-py3-none-any.whl", hash = "sha256:9322fef81189d870b08b5a8b44957c768c9e0ba431a81e6bd0d7cb39fcb87de8"},
+    {file = "torch_geometric-2.5.0.tar.gz", hash = "sha256:f4f4a57fd885c74e982d570df3a259ffff5adbb4ad7a3a95aabf5ace5fa7a240"},
+]
+
+[package.dependencies]
+aiohttp = "*"
+fsspec = "*"
+jinja2 = "*"
+numpy = "*"
+psutil = ">=5.8.0"
+pyparsing = "*"
+requests = "*"
+scikit-learn = "*"
+scipy = "*"
+tqdm = "*"
+
+[package.extras]
+benchmark = ["matplotlib", "networkx", "pandas", "protobuf (<4.21)", "wandb"]
+dev = ["pre-commit", "torch_geometric[test]"]
+full = ["ase", "captum (<0.7.0)", "graphviz", "h5py", "matplotlib", "networkx", "numba", "opt_einsum", "pandas", "pgmpy", "pynndescent", "pytorch-memlab", "rdflib", "rdkit", "scikit-image", "statsmodels", "sympy", "tabulate", "torch_geometric[graphgym,modelhub]", "torchmetrics", "trimesh"]
+graphgym = ["hydra-core", "protobuf (<4.21)", "pytorch-lightning", "yacs"]
+modelhub = ["huggingface_hub"]
+test = ["onnx", "onnxruntime", "pytest", "pytest-cov"]
+
+[[package]]
 name = "torch-scatter"
 version = "2.1.2+pt21cu121"
 description = "PyTorch Extension Library of Optimized Scatter Operations"
@@ -3476,4 +3507,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "3.10.12"
-content-hash = "b3a642cce2e42783b31b475b3fa097af42aa78ba5d544a018b3eed86f9cac31d"
+content-hash = "27c387961c95952ae16d49362acba851cf0abcffc7b8a97419771dec56a38e7d"
