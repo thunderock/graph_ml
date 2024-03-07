@@ -28,5 +28,6 @@ setup_all: clean
 .PHONY: format
 format:
 	@echo "formatting..."
+	@poetry install --only lint
 	@poetry run black .
 	@poetry run pre-commit run --all-files
