@@ -2162,6 +2162,25 @@ files = [
 ]
 
 [[package]]
+name = "pyg-lib"
+version = "0.4.0+pt21cu121"
+description = "Low-Level Graph Neural Network Operators for PyG"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "pyg_lib-0.4.0+pt21cu121-cp310-cp310-linux_x86_64.whl", hash = "sha256:1f487865f480a31acb043df4e4e43303163fc24ae1d92a8cb2aa278e65685686"},
+]
+
+[package.extras]
+dev = ["pre-commit"]
+test = ["pytest", "pytest-cov"]
+triton = ["triton"]
+
+[package.source]
+type = "url"
+url = "https://data.pyg.org/whl/torch-2.1.0%2Bcu121/pyg_lib-0.4.0%2Bpt21cu121-cp310-cp310-linux_x86_64.whl"
+
+[[package]]
 name = "pygments"
 version = "2.17.2"
 description = "Pygments is a syntax highlighting package written in Python."
@@ -2492,13 +2511,13 @@ stats = ["scipy (>=1.7)", "statsmodels (>=0.12)"]
 
 [[package]]
 name = "sentry-sdk"
-version = "1.40.6"
+version = "1.41.0"
 description = "Python client for Sentry (https://sentry.io)"
 optional = false
 python-versions = "*"
 files = [
-    {file = "sentry-sdk-1.40.6.tar.gz", hash = "sha256:f143f3fb4bb57c90abef6e2ad06b5f6f02b2ca13e4060ec5c0549c7a9ccce3fa"},
-    {file = "sentry_sdk-1.40.6-py2.py3-none-any.whl", hash = "sha256:becda09660df63e55f307570e9817c664392655a7328bbc414b507e9cb874c67"},
+    {file = "sentry-sdk-1.41.0.tar.gz", hash = "sha256:4f2d6c43c07925d8cd10dfbd0970ea7cb784f70e79523cca9dbcd72df38e5a46"},
+    {file = "sentry_sdk-1.41.0-py2.py3-none-any.whl", hash = "sha256:be4f8f4b29a80b6a3b71f0f31487beb9e296391da20af8504498a328befed53f"},
 ]
 
 [package.dependencies]
@@ -2524,7 +2543,7 @@ huey = ["huey (>=2)"]
 loguru = ["loguru (>=0.5)"]
 opentelemetry = ["opentelemetry-distro (>=0.35b0)"]
 opentelemetry-experimental = ["opentelemetry-distro (>=0.40b0,<1.0)", "opentelemetry-instrumentation-aiohttp-client (>=0.40b0,<1.0)", "opentelemetry-instrumentation-django (>=0.40b0,<1.0)", "opentelemetry-instrumentation-fastapi (>=0.40b0,<1.0)", "opentelemetry-instrumentation-flask (>=0.40b0,<1.0)", "opentelemetry-instrumentation-requests (>=0.40b0,<1.0)", "opentelemetry-instrumentation-sqlite3 (>=0.40b0,<1.0)", "opentelemetry-instrumentation-urllib (>=0.40b0,<1.0)"]
-pure-eval = ["asttokens", "executing", "pure_eval"]
+pure-eval = ["asttokens", "executing", "pure-eval"]
 pymongo = ["pymongo (>=3.1)"]
 pyspark = ["pyspark (>=2.4.4)"]
 quart = ["blinker (>=1.1)", "quart (>=0.16.1)"]
@@ -2805,6 +2824,111 @@ typing-extensions = "*"
 [package.extras]
 dynamo = ["jinja2"]
 opt-einsum = ["opt-einsum (>=3.3)"]
+
+[[package]]
+name = "torch-cluster"
+version = "1.6.2+pt21cu121"
+description = "PyTorch Extension Library of Optimized Graph Cluster Algorithms"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "torch_cluster-1.6.2+pt21cu121-cp310-cp310-linux_x86_64.whl", hash = "sha256:ec7d1827b6357f0df1ce23e3d695628fe4ba799c374d61a45573441b7456c7fa"},
+]
+
+[package.dependencies]
+scipy = "*"
+
+[package.extras]
+test = ["pytest", "pytest-cov"]
+
+[package.source]
+type = "url"
+url = "https://data.pyg.org/whl/torch-2.1.0%2Bcu121/torch_cluster-1.6.2%2Bpt21cu121-cp310-cp310-linux_x86_64.whl"
+
+[[package]]
+name = "torch-geometric"
+version = "2.5.0"
+description = "Graph Neural Network Library for PyTorch"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "torch_geometric-2.5.0-py3-none-any.whl", hash = "sha256:9322fef81189d870b08b5a8b44957c768c9e0ba431a81e6bd0d7cb39fcb87de8"},
+    {file = "torch_geometric-2.5.0.tar.gz", hash = "sha256:f4f4a57fd885c74e982d570df3a259ffff5adbb4ad7a3a95aabf5ace5fa7a240"},
+]
+
+[package.dependencies]
+aiohttp = "*"
+fsspec = "*"
+jinja2 = "*"
+numpy = "*"
+psutil = ">=5.8.0"
+pyparsing = "*"
+requests = "*"
+scikit-learn = "*"
+scipy = "*"
+tqdm = "*"
+
+[package.extras]
+benchmark = ["matplotlib", "networkx", "pandas", "protobuf (<4.21)", "wandb"]
+dev = ["pre-commit", "torch_geometric[test]"]
+full = ["ase", "captum (<0.7.0)", "graphviz", "h5py", "matplotlib", "networkx", "numba", "opt_einsum", "pandas", "pgmpy", "pynndescent", "pytorch-memlab", "rdflib", "rdkit", "scikit-image", "statsmodels", "sympy", "tabulate", "torch_geometric[graphgym,modelhub]", "torchmetrics", "trimesh"]
+graphgym = ["hydra-core", "protobuf (<4.21)", "pytorch-lightning", "yacs"]
+modelhub = ["huggingface_hub"]
+test = ["onnx", "onnxruntime", "pytest", "pytest-cov"]
+
+[[package]]
+name = "torch-scatter"
+version = "2.1.2+pt21cu121"
+description = "PyTorch Extension Library of Optimized Scatter Operations"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "torch_scatter-2.1.2+pt21cu121-cp310-cp310-linux_x86_64.whl", hash = "sha256:5f8d47fab8667b153ca5ca89b616c82f7610814bd25e1b1ee081e789bed3a76f"},
+]
+
+[package.extras]
+test = ["pytest", "pytest-cov"]
+
+[package.source]
+type = "url"
+url = "https://data.pyg.org/whl/torch-2.1.0%2Bcu121/torch_scatter-2.1.2%2Bpt21cu121-cp310-cp310-linux_x86_64.whl"
+
+[[package]]
+name = "torch-sparse"
+version = "0.6.18+pt21cu121"
+description = "PyTorch Extension Library of Optimized Autograd Sparse Matrix Operations"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "torch_sparse-0.6.18+pt21cu121-cp310-cp310-linux_x86_64.whl", hash = "sha256:1fa4542fc2a895b3530c872640ca25f6ae77a0072ecd8375e11989dcf9148d60"},
+]
+
+[package.dependencies]
+scipy = "*"
+
+[package.extras]
+test = ["pytest", "pytest-cov"]
+
+[package.source]
+type = "url"
+url = "https://data.pyg.org/whl/torch-2.1.0%2Bcu121/torch_sparse-0.6.18%2Bpt21cu121-cp310-cp310-linux_x86_64.whl"
+
+[[package]]
+name = "torch-spline-conv"
+version = "1.2.2+pt21cu121"
+description = "Implementation of the Spline-Based Convolution Operator of SplineCNN in PyTorch"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "torch_spline_conv-1.2.2+pt21cu121-cp310-cp310-linux_x86_64.whl", hash = "sha256:f9612c0dc4878c72c56fbf601b619f2d8459cd129ef4670c6381ae2016b77223"},
+]
+
+[package.extras]
+test = ["pytest", "pytest-cov"]
+
+[package.source]
+type = "url"
+url = "https://data.pyg.org/whl/torch-2.1.0%2Bcu121/torch_spline_conv-1.2.2%2Bpt21cu121-cp310-cp310-linux_x86_64.whl"
 
 [[package]]
 name = "torchaudio"
@@ -3383,4 +3507,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "3.10.12"
-content-hash = "3f16c9d68da0b321bdefa8cc33c83010a3239f3b73680b176e5cd8fd2fc095f1"
+content-hash = "3b4610de5297664598cf600db713bc03d8cee7002398d2f69e26852262e26091"
