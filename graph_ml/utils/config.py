@@ -25,3 +25,4 @@ def get_formatted_os():
     if PLATFORM == "darwin":
         return "MacOS"
     assert False, f"Unsupported platform: {PLATFORM}"
+    return None
