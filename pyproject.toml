@@ -3,7 +3,7 @@ name = "graph_ml"
 version = "0.1"
 description = ""
 authors = ["Ashutosh Tiwari <findashutoshtiwari@gmail.com>"]
-readme = "README.rst"
+readme = "README.md"
 packages = [{include = "graph_ml"}]
 classifiers = [
     "Environment :: GPU :: NVIDIA CUDA",
