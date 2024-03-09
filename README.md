@@ -2,6 +2,8 @@
 
 [![GraphML Build status][build-image]][build-url]
 
+## Still under very active development. 
+Suggestions and contributions are welcome. I'll try to create forms for contributions and suggestions soon.
 
 ML on Graphs made easy
 
