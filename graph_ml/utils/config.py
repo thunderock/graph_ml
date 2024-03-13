@@ -18,6 +18,17 @@ DEVICE_COUNT = torch.cuda.device_count() if DEVICE_TYPE == "cuda" else 1
 
 GPU_AVAILABLE = DEVICE_TYPE in ["cuda", "mps"]
 
+try:
+    import pyg_lib # noqa
+    WITH_PYG_LIB = True
+except:
+    WITH_PYG_LIB = False
+
+try:
+    import torch_cluster # noqa
+    WITH_TORCH_CLUSTER = True
+except:
+    WITH_TORCH_CLUSTER = False
 
 def get_formatted_os():
     if PLATFORM == "linux":

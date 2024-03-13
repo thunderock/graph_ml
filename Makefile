@@ -9,7 +9,7 @@ clean:
 
 
 .PHONY: setup
-setup: clean
+setup:
 	@echo "setting up..."
 ifeq ($(OS),Darwin)
 	@echo "Mac"
@@ -20,7 +20,7 @@ endif
 	@poetry install --only main -vvv
 
 .PHONY: setup_all
-setup_all: clean
+setup_all:
 	@echo "setting up..."
 	@poetry config virtualenvs.in-project true
 	@poetry install -vvv
