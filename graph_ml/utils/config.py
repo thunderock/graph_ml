@@ -37,3 +37,13 @@ def get_formatted_os():
         return "MacOS"
     assert False, f"Unsupported platform: {PLATFORM}"
     return None
+
+variables = dir()
+
+def print_variables():
+    for var in variables:
+        if var.isupper():
+            print(f"{var}: {eval(var)}")
+
+# probably should be moved to logger module
+print_variables()
