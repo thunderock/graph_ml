@@ -19,16 +19,19 @@ DEVICE_COUNT = torch.cuda.device_count() if DEVICE_TYPE == "cuda" else 1
 GPU_AVAILABLE = DEVICE_TYPE in ["cuda", "mps"]
 
 try:
-    import pyg_lib # noqa
+    import pyg_lib  # noqa
+
     WITH_PYG_LIB = True
 except:
     WITH_PYG_LIB = False
 
 try:
-    import torch_cluster # noqa
+    import torch_cluster  # noqa
+
     WITH_TORCH_CLUSTER = True
 except:
     WITH_TORCH_CLUSTER = False
+
 
 def get_formatted_os():
     if PLATFORM == "linux":
@@ -38,12 +41,15 @@ def get_formatted_os():
     assert False, f"Unsupported platform: {PLATFORM}"
     return None
 
+
 variables = dir()
+
 
 def print_variables():
     for var in variables:
         if var.isupper():
             print(f"{var}: {eval(var)}")
+
 
 # probably should be moved to logger module
 print_variables()

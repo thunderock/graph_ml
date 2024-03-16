@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import List
 
 import pandas as pd
 import scipy
@@ -6,7 +6,9 @@ from torch_geometric.data import download_url
 
 
 class Dataset(object):
-    def __init__(self, root: str = '/tmp/', group_col: str = None, urls: List = None) -> None:
+    def __init__(
+        self, root: str = "/tmp/", group_col: str = None, urls: List = None
+    ) -> None:
         self.root = root
         self.group_col = group_col
         self.file_paths = []

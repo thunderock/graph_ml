@@ -2,7 +2,7 @@ import numpy as np
 from torch_geometric.nn import Node2Vec as PyGNode2Vec
 import torch
 from ..models.node2vec import Node2Vec
-from ..utils import config, torch_utils
+from ..utils import torch_utils
 
 
 class TorchNode2Vec(Node2Vec):
@@ -14,7 +14,7 @@ class TorchNode2Vec(Node2Vec):
             walk_length=self.walk_length,
             context_size=self.context_size,
             sparse=True,
-            **params
+            **params,
         ).to(self.device)
         self.loader = self.optimizer = None
 
@@ -23,20 +23,22 @@ class TorchNode2Vec(Node2Vec):
         # should not be called too often, no caching here
         return torch_utils.adj_list_to_edge_index(self.adj_list)
 
-
     def _fit(self, epochs, learning_rate, batch_size, shuffle=True):
-
         # TODO (ashutosh): check if training two times works
         self.loader = self.model.loader(
             batch_size=batch_size, shuffle=shuffle, num_workers=self.num_workers
         )
-        self.optimizer = torch.optim.SparseAdam(self.model.parameters(), lr=learning_rate)
+        self.optimizer = torch.optim.SparseAdam(
+            self.model.parameters(), lr=learning_rate
+        )
         self.model.train()
         total_loss = [0] * epochs
         for epoch in range(epochs):
             for pos_rw, neg_rw in self.loader:
                 self.optimizer.zero_grad()
-                loss = self.model.loss(pos_rw.to(self.model.device), neg_rw.to(self.device))
+                loss = self.model.loss(
+                    pos_rw.to(self.model.device), neg_rw.to(self.device)
+                )
                 loss.backward()
                 self.optimizer.step()
                 total_loss[epoch] += loss.item()
