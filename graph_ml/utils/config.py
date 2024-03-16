@@ -22,14 +22,14 @@ try:
     import pyg_lib  # noqa
 
     WITH_PYG_LIB = True
-except:
+except Exception:
     WITH_PYG_LIB = False
 
 try:
     import torch_cluster  # noqa
 
     WITH_TORCH_CLUSTER = True
-except:
+except Exception:
     WITH_TORCH_CLUSTER = False
 
 
