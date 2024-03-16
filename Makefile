@@ -23,7 +23,10 @@ endif
 setup_all:
 	@echo "setting up..."
 	@poetry config virtualenvs.in-project true
-	@poetry install -vvv
+	@poetry install --only main --only debug --only test --only lint -vvv
+	@poetry run poetry run jupyter contrib nbextension install --user
+	@poetry run jupyter nbextension enable --py codeium --user
+	@poetry run jupyter serverextension enable --py codeium --user
 
 .PHONY: format
 format:

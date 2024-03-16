@@ -56,6 +56,9 @@ tox = "^4.13.0"
 kaggle = "^1.6.6"
 wandb = "^0.15.12"
 seaborn = "^0.13.0"
+jupyter = "^1.0.0"
+codeium-jupyter = "^1.1.21"
+jupyter-contrib-nbextensions = "^0.7.0"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.0.2"
