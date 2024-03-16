@@ -3,10 +3,10 @@ import networkx as nx
 from torch_geometric.data import extract_zip
 
 
-from datasets import dataset
+from ..datasets import dataset
 
 
-class PolBlogs(dataset.Dataset):
+class PolBooks(dataset.Dataset):
 
     def __init__(self, root: str = "/tmp/"):
         super().__init__(root=root, group_col="political_leaning",
