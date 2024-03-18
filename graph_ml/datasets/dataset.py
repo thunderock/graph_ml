@@ -20,11 +20,12 @@ class Dataset(object):
 
     @property
     def X(self):
-        return self.data.loc[:, self.data.columns != self.group_col].values
+        # can potentially be overloaded by child class
+        return self.data.values
 
     @property
     def y(self):
-        return self.data[:, self.group_col].values
+        return self.data[self.group_col].to_numpy()
 
     def _set_data_df(self) -> pd.DataFrame:
         raise NotImplementedError

@@ -28,4 +28,3 @@ class PolBooks(dataset.Dataset):
 
     def _set_adj(self):
         return nx.adjacency_matrix(self.graph)
-        pass
