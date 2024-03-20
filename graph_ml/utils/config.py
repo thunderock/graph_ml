@@ -51,5 +51,6 @@ def print_variables():
             print(f"{var}: {eval(var)}")
 
 
-# probably should be moved to logger module
-print_variables()
+if __name__ == "__main__":
+    # probably should be moved to logger module
+    print_variables()
