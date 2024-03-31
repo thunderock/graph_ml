@@ -41,3 +41,13 @@ run_tests:
 	@echo "running tests..."
 	@poetry install --only main --only test -vvv
 	@poetry run pytest -q tests
+
+.PHONY: run_notebook
+run_notebook:
+	@echo "running notebook..."
+	@poetry config virtualenvs.in-project true
+	@poetry install --only main --only debug -vvv
+	@poetry run poetry run jupyter contrib nbextension install --user
+	@poetry run jupyter nbextension enable --py codeium --user
+	@poetry run jupyter serverextension enable --py codeium --user
+	@poetry run jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser
