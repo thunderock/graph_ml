@@ -1,8 +1,6 @@
 from graph_ml import CyTrie
 import pytest
 
-import pytest
-
 
 @pytest.fixture()
 def ca_words():
@@ -43,8 +41,6 @@ def test_iter(words):
     trie = CyTrie(words)
     trie.extend(words)
     assert sorted(trie) == sorted(words)
-
-
 
 
 @pytest.mark.parametrize(
