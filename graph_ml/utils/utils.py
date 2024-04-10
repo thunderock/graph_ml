@@ -2,15 +2,18 @@ import numpy as np
 from scipy import sparse
 from numba import njit
 
+
 def to_member_matrix(group_ids):
     """
-    create a member matrix U such that U[i,k] = 1 if i belongs to group k otherwise U[i,k]=0
+    create a member matrix U such that U[i,k] = 1 if i belongs to group k else U[i,k]=0
     :param group_ids:
     :return:
     """
-    Nr = group_ids.shape[0] # equal to number of samples
-    Nc = int(np.max(group_ids) + 1) # number of classes
-    U = sparse.csr_matrix((np.ones_like(group_ids), (np.arange(Nr), group_ids)), shape=(Nr, Nc))
+    Nr = group_ids.shape[0]  # equal to number of samples
+    Nc = int(np.max(group_ids) + 1)  # number of classes
+    U = sparse.csr_matrix(
+        (np.ones_like(group_ids), (np.arange(Nr), group_ids)), shape=(Nr, Nc)
+    )
     U.data = U.data * 0 + 1
     return U
 
@@ -45,6 +48,3 @@ def csr_row_cumsum(indptr, data):
         end = indptr[i + 1]
         out[start:end] = np.cumsum(data[start:end])
     return out
-
-
-
