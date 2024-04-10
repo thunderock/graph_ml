@@ -6,7 +6,7 @@ from Cython.Build import build_ext, cythonize
 
 cython_dir = os.path.join("graph_ml", "_ext")
 extension = Extension(
-    "trie_again.cytrie",
+    "graph_ml.cytrie",
     [
         os.path.join(cython_dir, "cytrie.pyx"),
     ],
