@@ -20,6 +20,7 @@ def get_formatted_environ_variable(name, dtype, default):
         return value.lower() not in ["0", "false", "False", "FALSE"]
     return dtype(value)
 
+
 def to_member_matrix(group_ids):
     """
     create a member matrix U such that U[i,k] = 1 if i belongs to group k else U[i,k]=0
