@@ -5,6 +5,8 @@ import pytest
 @pytest.fixture()
 def trie():
     return CyTrie()
+
+
 @pytest.fixture()
 def ca_words():
     return ["cat", "car", "cartoon", "carate"]
