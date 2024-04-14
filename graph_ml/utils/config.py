@@ -1,10 +1,13 @@
 import os
 import sys
 import torch
+from ..utils import utils
 
 
 OS = os.name
 PLATFORM = sys.platform
+SEED = utils.get_formatted_environ_variable("SEED", int, 42)
+TUNING = utils.get_formatted_environ_variable("TUNING", bool, False)
 
 DEVICE_TYPE = "cpu"
 if OS == "posix":

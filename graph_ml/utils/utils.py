@@ -1,7 +1,24 @@
+import os
 import numpy as np
 from scipy import sparse
 from numba import njit
 
+
+def get_formatted_environ_variable(name, dtype, default):
+    """
+    get the environment variable with name `name` and convert it to `dtype`
+    if it is not available return the default value
+    :param name:
+    :param dtype:
+    :param default:
+    :return:
+    """
+    value = os.environ.get(name)
+    if value is None:
+        return default
+    if dtype == bool:
+        return value.lower() not in ["0", "false", "False", "FALSE"]
+    return dtype(value)
 
 def to_member_matrix(group_ids):
     """
