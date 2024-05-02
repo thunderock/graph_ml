@@ -66,3 +66,21 @@ def csr_row_cumsum(indptr, data):
         end = indptr[i + 1]
         out[start:end] = np.cumsum(data[start:end])
     return out
+
+def sample_csr(rows, csr_mat):
+    return _sample_csr(rows, csr_mat.indptr, csr_mat.indices, csr_mat.data)
+
+@njit(nogil=True)
+def _neighbors(indptr, indices_or_data, t):
+    return indices_or_data[indptr[t]: indptr[t + 1]]
+
+
+@njit(nogil=True)
+def _sample_csr(rows, indptr, indices, data):
+    n = len(rows)
+    retval = np.empty(n, dtype=indices.dtype)
+    for j in range(n):
+        neighbors = _neighbors(indptr, indices, rows[j])
+        neighbors_p = _neighbors(indptr, data, rows[j])
+        retval[j] = neighbors[np.searchsorted(neighbors_p, np.random.rand())]
+    return retval
