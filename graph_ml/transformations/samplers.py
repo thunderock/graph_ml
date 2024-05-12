@@ -18,9 +18,7 @@ class Sampler(object):
     May be should be changed in future, fit to be allowed to called multiple times.
     """
 
-    def fit(
-        self, A
-    ):
+    def fit(self, A):
         raise NotImplementedError
 
     def sample(self, centers, contexts, padding_mask=None):
@@ -61,16 +59,14 @@ class SbmNodeSampler(Sampler):
         indeg = A.sum(axis=0)
         Lambda = (self.node2group.T @ A @ self.node2group).toarray()
         Din = Lambda.sum(axis=1)
-        Nin = self.node2group.sum(axis=0)
-        Psbm = np.einsum(
-            "ij,i->ij", Lambda, 1 / np.maximum(1, Lambda.sum(axis=1))
-        )
+        self.node2group.sum(axis=0)
+        Psbm = np.einsum("ij,i->ij", Lambda, 1 / np.maximum(1, Lambda.sum(axis=1)))
         Psbm_pow = utils.matrix_sum_power(Psbm, self.window_length) / self.window_length
         if self.dcsbm:
             self.block2node = (
-                    sparse.diags(1 / np.maximum(1, Din))
-                    @ sparse.csr_matrix(self.node2group.T)
-                    @ sparse.diags(indeg)
+                sparse.diags(1 / np.maximum(1, Din))
+                @ sparse.csr_matrix(self.node2group.T)
+                @ sparse.diags(indeg)
             )
         self.block2block = sparse.csr_matrix(Psbm_pow)
         self.block2block.data = utils.csr_row_cumsum(
@@ -82,8 +78,6 @@ class SbmNodeSampler(Sampler):
         return self
 
     def sample(self, centers, contexts, padding_mask):
-        block_ids = utils.sample_csr(
-            self.group_membership[centers], self.block2block
-        )
+        block_ids = utils.sample_csr(self.group_membership[centers], self.block2block)
         context = utils.sample_csr(block_ids, self.block2node)
         return context.astype(np.int64)

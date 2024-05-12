@@ -67,12 +67,14 @@ def csr_row_cumsum(indptr, data):
         out[start:end] = np.cumsum(data[start:end])
     return out
 
+
 def sample_csr(rows, csr_mat):
     return _sample_csr(rows, csr_mat.indptr, csr_mat.indices, csr_mat.data)
 
+
 @njit(nogil=True)
 def _neighbors(indptr, indices_or_data, t):
-    return indices_or_data[indptr[t]: indptr[t + 1]]
+    return indices_or_data[indptr[t] : indptr[t + 1]]
 
 
 @njit(nogil=True)
