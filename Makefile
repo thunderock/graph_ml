@@ -5,7 +5,7 @@ clean:
 	@echo "cleaning up..."
 	@rm -rf ${CUR_DIR}/data/input
 	poetry env remove --all
-	@rm -rf ${CUR_DIR}/.venv
+	@rm -rf ${CUR_DIR}/.venv ${CUR_DIR}/build ${CUR_DIR}/.pytest_cache
 
 
 .PHONY: setup
