@@ -23,7 +23,7 @@ endif
 setup_all:
 	@echo "setting up..."
 	@poetry config virtualenvs.in-project true
-	@poetry install --only main --only debug --only test --only lint -vvv
+	@poetry install --only main --only jupyter --only test --only lint -vvv
 	@poetry run poetry run jupyter contrib nbextension install --user
 	@poetry run jupyter nbextension enable --py codeium --user
 	@poetry run jupyter serverextension enable --py codeium --user
@@ -46,7 +46,7 @@ run_tests:
 run_notebook:
 	@echo "running notebook..."
 	@poetry config virtualenvs.in-project true
-	@poetry install --only main --only debug -vvv
+	@poetry install --only main --only jupyter -vvv
 	@poetry run poetry run jupyter contrib nbextension install --user
 	@poetry run jupyter nbextension enable --py codeium --user
 	@poetry run jupyter serverextension enable --py codeium --user
