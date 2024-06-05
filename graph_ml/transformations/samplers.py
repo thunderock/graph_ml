@@ -62,12 +62,11 @@ class SbmNodeSampler(Sampler):
         self.node2group.sum(axis=0)
         Psbm = np.einsum("ij,i->ij", Lambda, 1 / np.maximum(1, Lambda.sum(axis=1)))
         Psbm_pow = utils.matrix_sum_power(Psbm, self.window_length) / self.window_length
-        if self.dcsbm:
-            self.block2node = (
-                sparse.diags(1 / np.maximum(1, Din))
-                @ sparse.csr_matrix(self.node2group.T)
-                @ sparse.diags(indeg)
-            )
+        self.block2node = (
+            sparse.diags(1 / np.maximum(1, Din))
+            @ sparse.csr_matrix(self.node2group.T)
+            @ sparse.diags(indeg)
+        )
         self.block2block = sparse.csr_matrix(Psbm_pow)
         self.block2block.data = utils.csr_row_cumsum(
             self.block2block.indptr, self.block2block.data
