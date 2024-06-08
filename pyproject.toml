@@ -44,6 +44,7 @@ traitlets = "5.9.0"
 # name = "torch-wheels"
 # url = "https://data.pyg.org/whl/torch-2.1.2+cu121.html"
 # priority = "primary"
+pytorch-lightning = "^2.2.5"
 
 [tool.poetry.build]
 generate-setup-file = false
