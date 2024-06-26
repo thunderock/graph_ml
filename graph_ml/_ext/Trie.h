@@ -1,9 +1,75 @@
 #include <iostream>
 #include <vector>
+#include <cmath>
+#include <numeric>
 #include <random>
 #include <algorithm>
-#include <unordered_set>
 
+// Utility Functions
+std::vector<double> row_normalize(const std::vector<double>& data, const std::vector<int>& indptr) {
+    std::vector<double> normalized_data = data;
+    for (size_t i = 0; i < indptr.size() - 1; ++i) {
+        double row_sum = std::accumulate(data.begin() + indptr[i], data.begin() + indptr[i + 1], 0.0);
+        if (row_sum > 1e-32) {
+            std::transform(normalized_data.begin() + indptr[i], normalized_data.begin() + indptr[i + 1],
+                           normalized_data.begin() + indptr[i], [row_sum](double d) { return d / row_sum; });
+        }
+    }
+    return normalized_data;
+}
+
+inline size_t pairing(size_t k1, size_t k2, bool unordered = false) {
+    size_t k12 = k1 + k2;
+    if (unordered) {
+        return (k12 * (k12 + 1)) / 2 + std::min(k1, k2);
+    } else {
+        return (k12 * (k12 + 1)) / 2 + k2;
+    }
+}
+
+inline std::pair<size_t, size_t> depairing(size_t z) {
+    size_t w = std::floor((std::sqrt(8.0 * z + 1) - 1) / 2.0);
+    size_t t = (w * w + w) / 2;
+    size_t y = z - t;
+    size_t x = w - y;
+    return std::make_pair(x, y);
+}
+
+inline double safe_log(double value, double minval = 1e-12) {
+    return std::log(std::max(value, minval));
+}
+
+std::vector<double> csr_row_cumsum(const std::vector<int>& indptr, const std::vector<double>& data) {
+    std::vector<double> out(data.size());
+    for (size_t i = 0; i < indptr.size() - 1; ++i) {
+        double acc = 0;
+        for (int j = indptr[i]; j < indptr[i + 1]; ++j) {
+            acc += data[j];
+            out[j] = acc;
+        }
+        out[indptr[i + 1] - 1] = 1.0;
+    }
+    return out;
+}
+
+std::vector<int> neighbors(const std::vector<int>& indptr, const std::vector<int>& indices, int t) {
+    return std::vector<int>(indices.begin() + indptr[t], indices.begin() + indptr[t + 1]);
+}
+
+std::vector<double> neighbors_data(const std::vector<int>& indptr, const std::vector<double>& data, int t) {
+    return std::vector<double>(data.begin() + indptr[t], data.begin() + indptr[t + 1]);
+}
+
+size_t weighted_choice(const std::vector<double>& weights, double rand_val) {
+    double cum_sum = 0.0;
+    for (size_t i = 0; i < weights.size(); ++i) {
+        cum_sum += weights[i];
+        if (rand_val <= cum_sum) return i;
+    }
+    return weights.size() - 1;
+}
+
+// RandomWalkSampler Class
 class RandomWalkSampler {
 public:
     RandomWalkSampler(const std::vector<int>& indptr,
@@ -17,13 +83,7 @@ public:
     {
         weighted = (!std::all_of(data.begin(), data.end(), [](double d){ return std::abs(d - 1) < 1e-9; }));
         if (weighted) {
-            std::vector<double> row_sums(indptr.size() - 1, 0.0);
-            for (size_t i = 0; i < data.size(); ++i) {
-                row_sums[i / (indptr[i + 1] - indptr[i])] += data[i];
-            }
-            for (size_t i = 0; i < data.size(); ++i) {
-                data[i] /= row_sums[i / (indptr[i + 1] - indptr[i])];
-            }
+            data = csr_row_cumsum(indptr, row_normalize(data, indptr));
         }
     }
 
@@ -49,25 +109,25 @@ private:
             int t = ts[walk_id];
             walks[walk_id][0] = t;
 
-            auto neighbors = _neighbors(t);
-            if (neighbors.empty()) continue;
+            auto neighbors_list = neighbors(indptr, indices, t);
+            if (neighbors_list.empty()) continue;
 
-            walks[walk_id][1] = neighbors[distribution(generator) * neighbors.size()];
+            walks[walk_id][1] = neighbors_list[distribution(generator) * neighbors_list.size()];
             for (int j = 2; j < walk_length; ++j) {
-                neighbors = _neighbors(walks[walk_id][j - 1]);
-                if (neighbors.empty()) break;
+                neighbors_list = neighbors(indptr, indices, walks[walk_id][j - 1]);
+                if (neighbors_list.empty()) break;
 
                 if (p == 1 && q == 1) {
-                    walks[walk_id][j] = neighbors[distribution(generator) * neighbors.size()];
+                    walks[walk_id][j] = neighbors_list[distribution(generator) * neighbors_list.size()];
                     continue;
                 }
 
                 while (true) {
-                    int new_node = neighbors[distribution(generator) * neighbors.size()];
+                    int new_node = neighbors_list[distribution(generator) * neighbors_list.size()];
                     double r = distribution(generator);
                     if (new_node == walks[walk_id][j - 2]) {
                         if (r < 1 / p) break;
-                    } else if (std::binary_search(neighbors.begin(), neighbors.end(), new_node)) {
+                    } else if (std::binary_search(neighbors_list.begin(), neighbors_list.end(), new_node)) {
                         if (r < 1) break;
                     } else if (r < 1 / q) break;
                 }
@@ -85,26 +145,26 @@ private:
             int t = ts[walk_id];
             walks[walk_id][0] = t;
 
-            auto neighbors = _neighbors(t);
-            if (neighbors.empty()) continue;
+            auto neighbors_list = neighbors(indptr, indices, t);
+            if (neighbors_list.empty()) continue;
 
-            walks[walk_id][1] = neighbors[_weighted_choice(_neighbors_data(t), distribution(generator))];
+            walks[walk_id][1] = neighbors_list[weighted_choice(neighbors_data(indptr, data, t), distribution(generator))];
             for (int j = 2; j < walk_length; ++j) {
-                neighbors = _neighbors(walks[walk_id][j - 1]);
-                if (neighbors.empty()) break;
+                neighbors_list = neighbors(indptr, indices, walks[walk_id][j - 1]);
+                if (neighbors_list.empty()) break;
 
-                auto neighbors_p = _neighbors_data(walks[walk_id][j - 1]);
+                auto neighbors_p = neighbors_data(indptr, data, walks[walk_id][j - 1]);
                 if (p == 1 && q == 1) {
-                    walks[walk_id][j] = neighbors[_weighted_choice(neighbors_p, distribution(generator))];
+                    walks[walk_id][j] = neighbors_list[weighted_choice(neighbors_p, distribution(generator))];
                     continue;
                 }
 
                 while (true) {
-                    int new_node = neighbors[_weighted_choice(neighbors_p, distribution(generator))];
+                    int new_node = neighbors_list[weighted_choice(neighbors_p, distribution(generator))];
                     double r = distribution(generator);
                     if (new_node == walks[walk_id][j - 2]) {
                         if (r < 1 / p) break;
-                    } else if (std::binary_search(neighbors.begin(), neighbors.end(), new_node)) {
+                    } else if (std::binary_search(neighbors_list.begin(), neighbors_list.end(), new_node)) {
                         if (r < 1) break;
                     } else if (r < 1 / q) break;
                 }
@@ -112,25 +172,9 @@ private:
         }
         return walks;
     }
-
-    std::vector<int> _neighbors(int t) {
-        return std::vector<int>(indices.begin() + indptr[t], indices.begin() + indptr[t + 1]);
-    }
-
-    std::vector<double> _neighbors_data(int t) {
-        return std::vector<double>(data.begin() + indptr[t], data.begin() + indptr[t + 1]);
-    }
-
-    size_t _weighted_choice(const std::vector<double>& weights, double rand_val) {
-        double cum_sum = 0.0;
-        for (size_t i = 0; i < weights.size(); ++i) {
-            cum_sum += weights[i];
-            if (rand_val <= cum_sum) return i;
-        }
-        return weights.size() - 1;
-    }
 };
 
+// Main Function for Testing
 int main() {
     // Example usage
     std::vector<int> indptr = {0, 2, 5, 7};
