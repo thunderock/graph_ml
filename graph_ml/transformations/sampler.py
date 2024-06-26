@@ -44,24 +44,3 @@ class Sampler(object):
     def sample(self, centers: Optional[np.ndarray], padding_mask: int = 0) -> np.ndarray:
         raise NotImplementedError
 
-
-"""
-
-Did:
-1. Reviewed, tested and merged STD team's PR to fix principal failure issue.
-2. Raised PR for funding type and reserve amount in ltd-cdf-pipeline.
-3. Completed Pru backtesting and asked Drew to review.
-4. Oncall deployment duties.
-Will do:
-1. Address any comments on PR for funding type and reserve amount in ltd-cdf-pipeline.
-2. Start testing Prudential on ltd-raw-data-preprocessor.
-
-Did:
-1. Merged PR for funding type and reserve amount in ltd-cdf-pipeline.
-2. Finished first version of Prudential on ltd-raw-data-preprocessor.
-Will do:
-1. Issue today for other clients due to funding type and reserve amount. Will check in local and then raise PR.
-2. Keep working on Prudential on ltd-raw-data-preprocessor. I am stuck with how to use export date asset. Will reach out to platform oncall
-in case not able to figure it out.
-3. Postpartum meeting for oneamerica oncall issue. Ask questions I had in mind.
-"""
