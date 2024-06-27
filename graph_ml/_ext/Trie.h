@@ -74,20 +74,20 @@ class RandomWalkSampler {
 public:
     RandomWalkSampler(const std::vector<int>& indptr,
                       const std::vector<int>& indices,
-                      const std::vector<double>& data,
+                      std::vector<double> data,  // Non-const to allow normalization
                       int walk_length = 40,
                       double p = 1,
                       double q = 1,
                       int padding_id = -1)
-        : indptr(indptr), indices(indices), data(data), walk_length(walk_length), p(p), q(q), padding_id(padding_id)
+        : indptr(indptr), indices(indices), data(std::move(data)), walk_length(walk_length), p(p), q(q), padding_id(padding_id)
     {
-        weighted = (!std::all_of(data.begin(), data.end(), [](double d){ return std::abs(d - 1) < 1e-9; }));
+        weighted = (!std::all_of(this->data.begin(), this->data.end(), [](double d){ return std::abs(d - 1) < 1e-9; }));
         if (weighted) {
-            data = csr_row_cumsum(indptr, row_normalize(data, indptr));
+            this->data = csr_row_cumsum(indptr, row_normalize(this->data, indptr));
         }
     }
 
-    std::vector<int> sampling(int start) {
+    std::vector<int> sampling(int start) const {
         std::vector<int> start_vec = {start};
         return weighted ? _random_walk_weighted(start_vec)[0] : _random_walk(start_vec)[0];
     }
@@ -100,7 +100,7 @@ private:
     int padding_id;
     bool weighted;
 
-    std::vector<std::vector<int>> _random_walk(const std::vector<int>& ts) {
+    std::vector<std::vector<int>> _random_walk(const std::vector<int>& ts) const {
         std::vector<std::vector<int>> walks(ts.size(), std::vector<int>(walk_length, padding_id));
         std::default_random_engine generator;
         std::uniform_real_distribution<double> distribution(0.0, 1.0);
@@ -136,7 +136,7 @@ private:
         return walks;
     }
 
-    std::vector<std::vector<int>> _random_walk_weighted(const std::vector<int>& ts) {
+    std::vector<std::vector<int>> _random_walk_weighted(const std::vector<int>& ts) const {
         std::vector<std::vector<int>> walks(ts.size(), std::vector<int>(walk_length, padding_id));
         std::default_random_engine generator;
         std::uniform_real_distribution<double> distribution(0.0, 1.0);
