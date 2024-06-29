@@ -38,12 +38,6 @@ numba = "^0.59.0"
 cython = "^3.0.10"
 traittypes = "^0.2.1"
 traitlets = "5.9.0"
-
-
-# [[tool.poetry.source]]
-# name = "torch-wheels"
-# url = "https://data.pyg.org/whl/torch-2.1.2+cu121.html"
-# priority = "primary"
 pytorch-lightning = "^2.2.5"
 
 [tool.poetry.build]
