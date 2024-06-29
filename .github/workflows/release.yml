@@ -8,148 +8,42 @@ on:
 
 jobs:
   build:
-    name: Build on ${{ matrix.platform || matrix.os }} (${{ matrix.target }} - ${{ 'auto' }})
+    runs-on: ${{ matrix.os }}-latest
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu]
-        target: [ x86_64, aarch64 ]
-        manylinux: [ auto ]
-        include:
-          - os: ubuntu
-            platform: linux
-            target: x86_64
-            interpreter: 3.10.12
-          - os: ubuntu
-            platform: linux
-            target: aarch64
-          - os: ubuntu
-            platform: linux
-            target: ppc64le
-            interpreter: 3.10.12
-          - os: ubuntu
-            platform: linux
-            interpreter: 3.10.12
-          - os: ubuntu
-            platform: linux
-            target: s390x
-            interpreter: 3.10.12
+        os: ["ubuntu", "macos"]
 
-    runs-on: ${{ matrix.os }}-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout GraphML
+        id: checkout_graphml
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.sha }}
 
-      - name: set up python
+      - name: Get short SHA
+        id: get_short_sha
+        uses: benjlevesque/short-sha@v2.2
+
+      - name: Install Python
+        id: install_python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10.12'
-          architecture: ${{ matrix.python-architecture || 'x64' }}
+          python-version: "3.10"
 
-      - name: setup poetry
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install poetry
-          poetry config virtualenvs.create false
+      - name: Install Poetry
+        id: install_poetry
+        uses: snok/install-poetry@v1
 
-      - name: build wheels
-        run: |
-          poetry build -f wheel
+      - name: Install Dependencies
+        id: install_dependencies
+        run: poetry install --with main
 
-      - run: ${{ matrix.ls || 'ls -lh' }} dist/
+      - name: Build release
+        id: build_release
+        run: poetry build -f wheel
 
       - uses: actions/upload-artifact@v3
         with:
           name: dist
           path: dist
-
-  build_sdist:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: set up python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10.12'
-          architecture: ${{ matrix.python-architecture || 'x64' }}
-
-      - name: setup poetry
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install poetry
-          poetry config virtualenvs.create false
-
-      - name: Build sdist
-        run: |
-          poetry build -f sdist
-
-      - name: Upload sdist
-        uses: actions/upload-artifact@v3
-        with:
-          name: dist
-          path: dist
-
-
-  Release:
-    needs: [ build, build_sdist ]
-    if: ${{ needs.build.result == 'success' && needs.build_sdist.result == 'success' }} && startsWith(github.ref, 'refs/tags/')
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Download artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: dist
-          path: dist
-
-      - name: Install Poetry
-        run: |
-          curl -fsS https://install.python-poetry.org | python - -y
-
-      - name: Update PATH
-        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
-
-      - name: Check distributions
-        run: |
-          ls -la dist
-
-      - name: Check Version
-        id: check-version
-        run: |
-          [[ "${GITHUB_REF#refs/tags/}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] \
-            || echo ::set-output name=prerelease::true
-
-      - name: Set tag
-        id: set-tag
-        run: |
-          echo ::set-output name=tag::$(ls dist/*.tar.gz | sed -n 's/.*graph_ml-\(.*\).tar.gz/\1/p')
-
-      - name: Print TAG
-        run: echo "v${{ steps.set-tag.outputs.tag }}"
-
-      - name: Delete older release assets
-        uses: mknejp/delete-release-assets@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          tag: "v${{ steps.set-tag.outputs.tag }}"
-          fail-if-no-assets: false
-          fail-if-no-release: false
-          assets: |
-            *.tar.gz
-            *.whl
-            *.zip
-
-      - name: Create Release
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "dist/*"
-          token: ${{ secrets.GITHUB_TOKEN }}
-          draft: false
-          tag: "v${{ steps.set-tag.outputs.tag }}"
-          skipIfReleaseExists: false
-          replacesArtifacts: true
-          prerelease: steps.check-version.outputs.prerelease == 'true'
-          makeLatest: true
-          allowUpdates: true
