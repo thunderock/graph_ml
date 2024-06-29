@@ -1,5 +1,4 @@
-import numpy as np
-
+import torch
 
 from ..utils import config
 
@@ -26,11 +25,16 @@ class Node2Vec(object):
     def fit(self, epochs=1, learning_rate=0.1, batch_size=128):
         return self._fit(epochs, learning_rate, batch_size)
 
-    def transform(self, nodes=None, type_=np.ndarray):
+    def transform(self, nodes=None, type_=torch.Tensor):
         return self._transform(nodes, type_)
 
     def fit_transform(
-        self, epochs=1, learning_rate=0.1, batch_size=128, nodes=None, type_=np.ndarray
+        self,
+        epochs=1,
+        learning_rate=0.1,
+        batch_size=128,
+        nodes=None,
+        type_=torch.Tensor,
     ):
         self.fit(epochs, learning_rate, batch_size)
         return self.transform(nodes, type_)

@@ -2,7 +2,6 @@ import numpy as np
 from torch_geometric.nn import Node2Vec as PyGNode2Vec
 import torch
 from ..models.node2vec import Node2Vec
-from ..utils import torch_utils
 
 
 class TorchNode2Vec(Node2Vec):
@@ -21,7 +20,7 @@ class TorchNode2Vec(Node2Vec):
     @property
     def edge_index(self):
         # should not be called too often, no caching here
-        return torch_utils.adj_list_to_edge_index(self.adj_list)
+        return self.adj_list.nonzero().t().contiguous()
 
     def _fit(self, epochs, learning_rate, batch_size, shuffle=True):
         # TODO (ashutosh): check if training two times works
@@ -47,7 +46,7 @@ class TorchNode2Vec(Node2Vec):
                 print(f"Epoch: {epoch}, Loss: {total_loss[epoch]}")
         return self
 
-    def _transform(self, nodes=None, type_=np.ndarray):
+    def _transform(self, nodes=None, type_=torch.Tensor):
         self.model.eval()
         if nodes is None:
             nodes = torch.arange(self.num_nodes, device=self.device)
