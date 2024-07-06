@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "graph_ml"
 version = "0.1"
-description = ""
+description = "Sklearn like API for Graph ML"
 authors = ["Ashutosh Tiwari <findashutoshtiwari@gmail.com>"]
 readme = "README.md"
 packages = [{include = "graph_ml"}]
