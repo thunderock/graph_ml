@@ -74,8 +74,7 @@
         },
     },
 
-    // By default use the dev environment python created by env.py.
-    "python.defaultInterpreterPath": "${workspaceFolder}/.venvs/dev/bin/python",
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
     "python.envFile": "${workspaceFolder}/.env",
 
     "github.copilot.enable": {
