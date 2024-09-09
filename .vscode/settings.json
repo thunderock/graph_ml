@@ -1,0 +1,84 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/__pycache__" : true,
+        "**/node_modules/" : true,
+        "**/.mypy_cache" : true,
+        "**/.metals" : true,
+        "**/.pytest_cache" : true,
+        "**/.ruff_cache" : true,
+        ".venvs" : true,
+        "**/*.egg-info" : true,
+    },
+    "files.associations": {
+        "*.log.*": "log"
+    },
+
+    "editor.insertSpaces": true,
+    "files.trimTrailingWhitespace": true,
+    "[markdown]": {
+        "files.trimTrailingWhitespace": false,
+    },
+    "[python]" : {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "ms-python.black-formatter",
+    },
+
+    // ==== Autocomplete issues ========
+
+    // Auto import
+    "python.analysis.autoImportCompletions" : true,
+    "python.analysis.packageIndexDepths" : [
+        {
+            "name": "graph_ml",
+            "depth": 4
+        },
+    ],
+
+    // ==== Linting ===
+    // linter
+    "flake8.enabled" : false,
+    "isort.enabled" : false,
+    "ruff.enable": true,
+    "ruff.lint.args": [
+        "--config=pyproject.toml",
+        "--extend-ignore=I",
+    ],
+
+    // mypy - typechecker
+    "mypy-type-checker.importStrategy": "fromEnvironment",
+    "mypy-type-checker.args": ["--config-file", "pyproject.toml"],
+
+    // code formatter - black
+    "black-formatter.importStrategy": "fromEnvironment",
+    "black-formatter.args": ["--config", "${workspaceFolder}/pyproject.toml"],
+
+    // ====== pytest =====
+    // See linting re passing config path.
+    "python.testing.pytestEnabled": true,
+    "python.testing.pytestArgs": ["-c", "${workspaceFolder}/pyproject.toml"],
+
+
+    // === Integrated terminal ====
+    "terminal.integrated.profiles.linux": {
+        // Ensure the default integrated terminal (bash) respects .bash_profile
+        // https://superuser.com/questions/1209366/win10-vs-code-integrated-bash-not-loading-bash-profile
+        "bash": {
+            "path": "bash",
+            "args": ["--init-file", "${workspaceFolder}/.vscode/start-terminal.sh"],
+        },
+    },
+
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+    "python.envFile": "${workspaceFolder}/.env",
+
+    "github.copilot.enable": {
+        "*": true,
+    }
+
+}

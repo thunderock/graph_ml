@@ -70,7 +70,7 @@ jobs:
         run: timeout 10s poetry run pip --version || rm -rf .venv
 
       - name: Uninstall typing dependencies
-        run: poetry install --only main --only test -vvv
+        run: poetry install -vvv
 
       - name: Test
         run: |
