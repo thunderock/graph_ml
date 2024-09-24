@@ -8,6 +8,7 @@
 
 import numpy as np
 from scipy import sparse
+
 from ..utils import utils
 
 

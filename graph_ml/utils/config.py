@@ -1,8 +1,9 @@
 import os
 import sys
-import torch
-from ..utils import utils
 
+import torch
+
+from ..utils import utils
 
 OS = os.name
 PLATFORM = sys.platform

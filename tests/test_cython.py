@@ -1,5 +1,6 @@
-from graph_ml import CyTrie
 import pytest
+
+from graph_ml import CyTrie
 
 
 @pytest.fixture()

@@ -1,7 +1,8 @@
 import os
+
 import numpy as np
-from scipy import sparse
 from numba import njit
+from scipy import sparse
 
 
 def get_formatted_environ_variable(name, dtype, default):

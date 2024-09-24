@@ -9,5 +9,6 @@
         "ms-python.mypy-type-checker",
         "eamodio.gitlens",
         "ms-vscode.makefile-tools",
+        "ms-python.isort",
     ]
 }

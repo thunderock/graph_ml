@@ -1,6 +1,7 @@
 import numpy as np
-from torch_geometric.nn import Node2Vec as PyGNode2Vec
 import torch
+from torch_geometric.nn import Node2Vec as PyGNode2Vec
+
 from ..models.node2vec import Node2Vec
 
 

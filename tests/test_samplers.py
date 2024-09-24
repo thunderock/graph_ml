@@ -1,6 +1,7 @@
-from graph_ml.transformations import samplers
-from graph_ml.datasets import polbooks
 import pytest
+
+from graph_ml.datasets import polbooks
+from graph_ml.transformations import samplers
 
 
 @pytest.fixture()

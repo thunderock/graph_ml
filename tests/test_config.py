@@ -1,6 +1,8 @@
 import os
-from graph_ml.utils import config
+
 import pytest
+
+from graph_ml.utils import config
 
 
 @pytest.fixture()
