@@ -3,7 +3,7 @@
 echo "Init vscode integrated terminal"
 
 ENV_FILE=".env"
-VENV_DIR=".venv/bin/activate"
+VENV_DIR="./.venv/bin/activate"
 
 if test -f ~/.bash_profile; then
     echo "Running ~/.bash_profile"

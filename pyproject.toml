@@ -49,6 +49,7 @@ codeium-jupyter = "^1.1.21"
 jupyter-contrib-nbextensions = "^0.7.0"
 pre-commit = "^3.6.2"
 black = "^24.2.0"
+isort = "^5.13.2"
 
 
 [tool.poetry.build]

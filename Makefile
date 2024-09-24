@@ -27,8 +27,9 @@ endif
 format:
 	@echo "formatting..."
 	@poetry install
+	# add isort
+	@poetry run isort .
 	@poetry run black .
-	# ruff fix
 	@poetry run pre-commit run --all-files --config .pre-commit-config.yaml
 
 .PHONY: run_tests

@@ -1,7 +1,6 @@
-import pandas as pd
 import networkx as nx
+import pandas as pd
 from torch_geometric.data import extract_zip
-
 
 from ..datasets import dataset
 

@@ -2,6 +2,7 @@
 
 from Trie cimport Trie
 
+
 cdef class CyTrie:
     cdef Trie c_trie;
 

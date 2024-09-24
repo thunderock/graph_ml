@@ -1,7 +1,7 @@
 # distutils: language = c++
 
-from libcpp.string cimport string
 from libcpp.list cimport list
+from libcpp.string cimport string
 
 
 cdef extern from "Trie.cpp":

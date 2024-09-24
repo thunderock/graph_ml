@@ -1,7 +1,9 @@
+import random
 from typing import Optional
+
 import numpy as np
 import pytorch_lightning as pl
-import random
+
 from ..utils import utils
 
 
