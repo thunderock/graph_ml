@@ -11,12 +11,10 @@ class Node2Vec(object):
         walk_length,
         context_size,
         device=config.DEVICE,
-        logging=config.LOGGING,
         **params
     ):
         self.adj_list = adj_list
         self.num_workers = config.WORKER_COUNT
-        self.logging = logging
         self.embedding_dim = embedding_dim
         self.walk_length = walk_length
         self.context_size = context_size

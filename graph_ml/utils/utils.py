@@ -3,6 +3,23 @@ import os
 import numpy as np
 from numba import njit
 from scipy import sparse
+import asyncio
+
+
+# no global variables in this module
+
+
+def get_event_loop():
+    """
+    get the event loop for the current thread
+    :return:
+    """
+    # check if the event loop is already created if not create a new one
+    try:
+        loop = asyncio.get_event_loop()
+    except RuntimeError:
+        loop = asyncio.new_event_loop()
+    return loop
 
 
 def get_formatted_environ_variable(name, dtype, default):
