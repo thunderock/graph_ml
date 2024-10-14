@@ -1,28 +1,13 @@
-import logging
 import asyncio
-from logging import getLogger, StreamHandler, FileHandler, Formatter
-from concurrent.futures import ThreadPoolExecutor
+import logging
+from logging import Formatter, StreamHandler, getLogger
+
 from colorama import Fore, Style, init
+
 from ..utils import utils
 
 # Initialize colorama for Windows compatibility
 init(autoreset=True)
-
-
-class AsyncFileHandler(FileHandler):
-    def __init__(self, filename):
-        super().__init__(filename)
-        self.loop = asyncio.get_event_loop()
-        self.executor = ThreadPoolExecutor()
-
-    async def emit(self, record):
-        msg = self.format(record)
-        await self.loop.run_in_executor(self.executor, self._write, msg)
-
-    def _write(self, msg):
-        with self._open() as file:
-            file.write(f"{msg}\n")
-            file.flush()
 
 
 class ColorFormatter(Formatter):
@@ -49,7 +34,7 @@ class AsyncLogger:
             cls._instance = super(AsyncLogger, cls).__new__(cls)
         return cls._instance
 
-    def __init__(self, name, file_path=None):
+    def __init__(self, name):
         if hasattr(self, "_initialized") and self._initialized:
             return  # Prevent re-initialization
         self._initialized = True
@@ -66,14 +51,6 @@ class AsyncLogger:
         console_handler = StreamHandler()
         console_handler.setFormatter(formatter)
         self.logger.addHandler(console_handler)
-
-        # File Handler (Asynchronous)
-        if file_path:
-            async_file_handler = AsyncFileHandler(file_path)
-            async_file_handler.setFormatter(
-                Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-            )  # No color for file
-            self.logger.addHandler(async_file_handler)
 
     async def info(self, message):
         await self._log_async(self.logger.info, message)
@@ -116,5 +93,5 @@ class LoggerWrapper:
 
 
 # Exposing the logger as a singleton instance
-logger_instance = AsyncLogger(name="graph_ml", file_path="graph_ml.log")
+logger_instance = AsyncLogger(name="graph_ml")
 logger = LoggerWrapper(logger_instance)

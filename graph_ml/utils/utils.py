@@ -1,10 +1,9 @@
+import asyncio
 import os
 
 import numpy as np
 from numba import njit
 from scipy import sparse
-import asyncio
-
 
 # no global variables in this module
 
